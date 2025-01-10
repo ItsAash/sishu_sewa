@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sishu_sewa/components/navbar.dart';
+import 'package:sishu_sewa/models/measurement.dart';
 import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
+import 'package:sishu_sewa/pages/measurement.dart';
+import 'package:sishu_sewa/pages/information.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,9 +58,19 @@ class _MainState extends State<Main> {
       floatingActionButton: floatingActionButton(context),
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
+        children: [
           HomeScreen(),
           KidsScreen(),
+          MeasurementScreen(
+            child: ChildMeasurement(
+              name: 'John Doe',
+              imageUrl: 'https://example.com/image.jpg',
+              birthDate: DateTime(2015, 5, 15),
+              gender: 'Male',
+              measurements: [],
+              lastUpdated: DateTime.now(),
+            ),
+          ), // Pass a valid ChildMeasurement object
           // Add other pages here
         ],
       ),
@@ -86,7 +99,15 @@ Widget floatingActionButton(BuildContext context) {
         // Action for the FAB
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const AddChildPage()),
+          MaterialPageRoute(builder: (context) => MeasurementScreen(
+            child: ChildMeasurement(
+              name: "John Doe",
+              imageUrl: 'https://example.com/image.jpg',
+              birthDate: DateTime(2015, 5, 15), gender: "Male", measurements: [], lastUpdated: DateTime.now()
+          
+            ),
+            ),
+          ),
         );
       },
       backgroundColor: Colors.transparent, // Make the background transparent
