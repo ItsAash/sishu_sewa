@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sishu_sewa/components/navbar.dart';
+import 'package:sishu_sewa/models/measurement.dart';
 import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
+import 'package:sishu_sewa/pages/measurement.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sisu Sewa',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF3E3E3E), // Background color
+        // scaffoldBackgroundColor: const Color(0xFF3E3E3E), // Background color
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blue,
           brightness:
@@ -55,9 +57,19 @@ class _MainState extends State<Main> {
       floatingActionButton: floatingActionButton(context),
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
+        children: [
           HomeScreen(),
           KidsScreen(),
+          MeasurementScreen(
+            child: ChildMeasurement(
+              name: 'John Doe',
+              imageUrl: 'https://example.com/image.jpg',
+              birthDate: DateTime(2015, 5, 15),
+              gender: 'Male',
+              measurements: [],
+              lastUpdated: DateTime.now(),
+            ),
+          ), // Pass a valid ChildMeasurement object
           // Add other pages here
         ],
       ),
@@ -86,7 +98,7 @@ Widget floatingActionButton(BuildContext context) {
         // Action for the FAB
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const AddChildPage()),
+          MaterialPageRoute(builder: (context) => AddChildPage()),
         );
       },
       backgroundColor: Colors.transparent, // Make the background transparent

@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const WelcomeComponent(
-                name: "Ashish Neupane",
+                name: "Prabesh Guragain",
                 imageUrl:
                     "https://media.licdn.com/dms/image/v2/D5603AQF7InSZOBQMpg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1674112007614?e=1741824000&v=beta&t=9I1tcswSbG2GVFYuLwBA5Mq8qlG3zOxdiMkMG5QJJUo"),
             Stack(children: [
