@@ -5,7 +5,6 @@ import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
 import 'package:sishu_sewa/pages/measurement.dart';
-import 'package:sishu_sewa/pages/information.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sisu Sewa',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF3E3E3E), // Background color
+        // scaffoldBackgroundColor: const Color(0xFF3E3E3E), // Background color
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blue,
           brightness:
@@ -99,15 +98,7 @@ Widget floatingActionButton(BuildContext context) {
         // Action for the FAB
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MeasurementScreen(
-            child: ChildMeasurement(
-              name: "John Doe",
-              imageUrl: 'https://example.com/image.jpg',
-              birthDate: DateTime(2015, 5, 15), gender: "Male", measurements: [], lastUpdated: DateTime.now()
-          
-            ),
-            ),
-          ),
+          MaterialPageRoute(builder: (context) => AddChildPage()),
         );
       },
       backgroundColor: Colors.transparent, // Make the background transparent
