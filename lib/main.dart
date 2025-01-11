@@ -4,7 +4,7 @@ import 'package:sishu_sewa/models/measurement.dart';
 import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
-import 'package:sishu_sewa/pages/measurement.dart';
+import 'package:sishu_sewa/pages/kid_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -59,8 +59,17 @@ class _MainState extends State<Main> {
         index: _currentIndex,
         children: [
           HomeScreen(),
-          KidsScreen(),
-          MeasurementScreen(
+          KidsScreen(
+            child: ChildMeasurement(
+              name: 'John Doe',
+              imageUrl: 'https://example.com/image.jpg',
+              birthDate: DateTime(2015, 5, 15),
+              gender: 'Male',
+              measurements: [],
+              lastUpdated: DateTime.now(),
+            ),
+          ),
+          KidProfileScreen(
             child: ChildMeasurement(
               name: 'John Doe',
               imageUrl: 'https://example.com/image.jpg',

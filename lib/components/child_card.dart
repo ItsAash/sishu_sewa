@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sishu_sewa/components/progress_bar.dart';
 import 'package:sishu_sewa/models/measurement.dart';
-import 'package:sishu_sewa/pages/measurement.dart';
+import 'package:sishu_sewa/pages/kid_profile.dart';
 
 class ChildCard extends StatelessWidget {
   final String name;
@@ -46,7 +46,7 @@ class ChildCard extends StatelessWidget {
             lastUpdated: DateTime.now(),
           );
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return MeasurementScreen(child: child);
+            return KidProfileScreen(child: child);
           }));
         },
         child: Container(

@@ -3,10 +3,10 @@ import 'package:sishu_sewa/components/growth_chart.dart';
 import 'package:sishu_sewa/components/measurement_card.dart';
 import 'package:sishu_sewa/models/measurement.dart';
 
-class KidsScreen extends StatelessWidget {
+class KidProfileScreen extends StatelessWidget {
   final ChildMeasurement child;
 
-  const KidsScreen({super.key, required this.child});
+  const KidProfileScreen({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +149,9 @@ class KidsScreen extends StatelessWidget {
             Positioned(
               top: 0,
               left: MediaQuery.of(context).size.width * 0.5 - 70,
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 backgroundImage:
-                    NetworkImage("https://robohash.org/dahlsdhkalsd"),
+                    NetworkImage("https://robohash.org/${child.name}"),
                 radius: 70,
               ),
             ),
