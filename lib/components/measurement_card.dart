@@ -4,7 +4,8 @@ import '../models/measurement.dart';
 class MeasurementCard extends StatelessWidget {
   final Measurement measurement;
 
-  const MeasurementCard({Key? key, required this.measurement}) : super(key: key);
+  const MeasurementCard({Key? key, required this.measurement})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +20,10 @@ class MeasurementCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  measurement.date.toString().split(' ')[0],
+                  '${measurement.date.year}-${measurement.date.month.toString().padLeft(2, '0')}-${measurement.date.day.toString().padLeft(2, '0')}',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text(
-                    'Good',
-                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ],
@@ -45,9 +32,12 @@ class MeasurementCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildMeasurement('HT', '${measurement.height}cm', 'Insufficient'),
-                _buildMeasurement('WT', '${measurement.weight}kg', 'Insufficient'),
-                _buildMeasurement('BMI', measurement.bmi.toString(), 'Normal'),
+                _buildMeasurement('Height', '${measurement.height}cm',
+                    measurement.heightStatus),
+                _buildMeasurement('Weight', '${measurement.weight}kg',
+                    measurement.weightStatus),
+                _buildMeasurement('BMI', measurement.bmi.toStringAsFixed(1),
+                    measurement.bmiStatus),
               ],
             ),
           ],
@@ -67,11 +57,7 @@ class MeasurementCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: status == 'Insufficient'
-                ? Colors.orange
-                : status == 'Normal'
-                    ? Colors.green
-                    : Colors.blue,
+            color: _getStatusColor(status),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
@@ -81,5 +67,18 @@ class MeasurementCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'insufficient':
+        return Colors.orange;
+      case 'good':
+        return Colors.green;
+      case 'over-expected':
+        return Colors.red;
+      default:
+        return Colors.blue;
+    }
   }
 }

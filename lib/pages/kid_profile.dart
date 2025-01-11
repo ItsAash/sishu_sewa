@@ -2,14 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:sishu_sewa/components/growth_chart.dart';
 import 'package:sishu_sewa/components/measurement_card.dart';
 import 'package:sishu_sewa/models/measurement.dart';
+import 'package:sishu_sewa/pages/update_data_screen.dart';
 
-class KidProfileScreen extends StatelessWidget {
+class KidProfileScreen extends StatefulWidget {
   final ChildMeasurement child;
 
   const KidProfileScreen({super.key, required this.child});
 
   @override
+  State<KidProfileScreen> createState() => _KidProfileScreenState();
+}
+
+class _KidProfileScreenState extends State<KidProfileScreen> {
+  late ChildMeasurement _child;
+
+  @override
+  void initState() {
+    super.initState();
+    _child = widget.child;
+  }
+
+  void _updateMeasurement(Measurement newMeasurement) {
+    setState(() {
+      _child.measurements.add(newMeasurement);
+      _child.measurements.sort((a, b) => b.date.compareTo(a.date));
+    });
+  }
+
+  void _showGrowthChart() {
+    if (_child.measurements.isNotEmpty) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => GrowthChart(
+          childData: _child.measurements,
+          childBirthDate: _child.birthDate,
+          childGender: _child.gender,
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No measurement data available')),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final latestMeasurement =
+        _child.measurements.isNotEmpty ? _child.measurements.first : null;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -50,7 +92,7 @@ class KidProfileScreen extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            child.name,
+                            _child.name,
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -58,7 +100,7 @@ class KidProfileScreen extends StatelessWidget {
                                 fontFamily: "Rubik"),
                           ),
                           const SizedBox(height: 10),
-                          Text(child.age,
+                          Text(_child.age,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -68,7 +110,7 @@ class KidProfileScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    '${child.birthDate.toLocal()}'
+                                    '${_child.birthDate.toLocal()}'
                                         .split(' ')[0],
                                     style: const TextStyle(
                                       color: Colors.grey,
@@ -85,7 +127,7 @@ class KidProfileScreen extends StatelessWidget {
                                   child: null,
                                 ),
                                 const SizedBox(width: 10),
-                                Text(child.gender,
+                                Text(_child.gender,
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 16,
@@ -93,7 +135,17 @@ class KidProfileScreen extends StatelessWidget {
                               ]),
                           const SizedBox(height: 16),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UpdateDataScreen(
+                                    child: _child,
+                                    onUpdate: _updateMeasurement,
+                                  ),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orange,
                               minimumSize: const Size(double.infinity, 48),
@@ -105,13 +157,7 @@ class KidProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           OutlinedButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => const GrowthChart(),
-                              );
-                            },
+                            onPressed: _showGrowthChart,
                             style: OutlinedButton.styleFrom(
                               foregroundColor: Colors.white,
                               side: const BorderSide(color: Colors.white),
@@ -119,25 +165,37 @@ class KidProfileScreen extends StatelessWidget {
                             ),
                             child: const Text('Growth Chart'),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                _buildMeasurementTile('Height', '73', 'cm'),
-                                _buildMeasurementTile('Weight', '12', 'kg'),
-                                _buildMeasurementTile('BMI', '12', ''),
-                              ],
+                          if (latestMeasurement != null)
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  _buildMeasurementTile('Height',
+                                      '${latestMeasurement.height}', 'cm'),
+                                  _buildMeasurementTile('Weight',
+                                      '${latestMeasurement.weight}', 'kg'),
+                                  _buildMeasurementTile(
+                                      'BMI',
+                                      latestMeasurement.bmi.toStringAsFixed(1),
+                                      ''),
+                                ],
+                              ),
+                            )
+                          else
+                            const Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Text('No measurement data available'),
                             ),
-                          ),
                           const Divider(),
                           ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: child.measurements.length,
+                            itemCount: _child.measurements.length,
                             itemBuilder: (context, index) {
                               return MeasurementCard(
-                                measurement: child.measurements[index],
+                                measurement: _child.measurements[index],
                               );
                             },
                           ),
@@ -151,7 +209,7 @@ class KidProfileScreen extends StatelessWidget {
               left: MediaQuery.of(context).size.width * 0.5 - 70,
               child: CircleAvatar(
                 backgroundImage:
-                    NetworkImage("https://robohash.org/${child.name}"),
+                    NetworkImage("https://robohash.org/${_child.name}"),
                 radius: 70,
               ),
             ),

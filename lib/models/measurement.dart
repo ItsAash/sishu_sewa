@@ -3,14 +3,18 @@ class Measurement {
   final double height;
   final double weight;
   final double bmi;
-  final String status;
+  final String heightStatus;
+  final String weightStatus;
+  final String bmiStatus;
 
   Measurement({
     required this.date,
     required this.height,
     required this.weight,
     required this.bmi,
-    required this.status,
+    required this.heightStatus,
+    required this.weightStatus,
+    required this.bmiStatus,
   });
 }
 
@@ -20,15 +24,13 @@ class ChildMeasurement {
   final DateTime birthDate;
   final String gender;
   final List<Measurement> measurements;
-  final DateTime lastUpdated;
 
   ChildMeasurement({
     required this.name,
     required this.imageUrl,
     required this.birthDate,
     required this.gender,
-    required this.measurements,
-    required this.lastUpdated,
+    required this.measurements, required DateTime lastUpdated,
   });
 
   String get age {
@@ -40,3 +42,4 @@ class ChildMeasurement {
     return '$years Years $months Months $days Days';
   }
 }
+
