@@ -4,6 +4,8 @@ import 'package:sishu_sewa/models/measurement.dart';
 import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
+import 'package:sishu_sewa/pages/profile_screen.dart';
+import 'package:sishu_sewa/pages/setting_screen.dart';
 import 'package:sishu_sewa/pages/kid_profile.dart';
 
 void main() {
@@ -18,11 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sisu Sewa',
       theme: ThemeData(
-        // scaffoldBackgroundColor: const Color(0xFF3E3E3E), // Background color
+        scaffoldBackgroundColor: const Color(0xFF3E3E3E), // Background color
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blue,
-          brightness:
-              Brightness.dark, // Dark mode ensures white text by default
+          brightness: Brightness.dark,
         ),
         textTheme: const TextTheme(
           bodyLarge: TextStyle(color: Colors.white),
@@ -31,18 +32,27 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: Main(),
+      home: const Main(),
     );
   }
 }
 
 class Main extends StatefulWidget {
+  const Main({Key? key}) : super(key: key);
+
   @override
   _MainState createState() => _MainState();
 }
 
 class _MainState extends State<Main> {
   int _currentIndex = 0;
+
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const KidsScreen(),
+    const ProfileScreen(),
+    const SettingsScreen(),
+  ];
 
   void _onTap(int index) {
     setState(() {
@@ -57,30 +67,7 @@ class _MainState extends State<Main> {
       floatingActionButton: floatingActionButton(context),
       body: IndexedStack(
         index: _currentIndex,
-        children: [
-          HomeScreen(),
-          KidsScreen(
-            child: ChildMeasurement(
-              name: 'John Doe',
-              imageUrl: 'https://example.com/image.jpg',
-              birthDate: DateTime(2015, 5, 15),
-              gender: 'Male',
-              measurements: [],
-              lastUpdated: DateTime.now(),
-            ),
-          ),
-          KidProfileScreen(
-            child: ChildMeasurement(
-              name: 'John Doe',
-              imageUrl: 'https://example.com/image.jpg',
-              birthDate: DateTime(2015, 5, 15),
-              gender: 'Male',
-              measurements: [],
-              lastUpdated: DateTime.now(),
-            ),
-          ), // Pass a valid ChildMeasurement object
-          // Add other pages here
-        ],
+        children: _screens,
       ),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _currentIndex,
@@ -94,28 +81,27 @@ Widget floatingActionButton(BuildContext context) {
   return Container(
     decoration: const BoxDecoration(
       gradient: LinearGradient(
-        colors: [Color(0xFF4EC1FF), Color(0xFF2D8DFF)], // Gradient colors
-        begin: Alignment.topLeft, // Start of the gradient
-        end: Alignment.bottomRight, // End of the gradient
+        colors: [Color(0xFF4EC1FF), Color(0xFF2D8DFF)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
       ),
-      shape: BoxShape.circle, // To maintain the circular shape
+      shape: BoxShape.circle,
     ),
     width: 60,
     height: 60,
     child: FloatingActionButton(
       onPressed: () {
-        // Action for the FAB
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AddChildPage()),
+          MaterialPageRoute(builder: (context) => const AddChildPage()),
         );
       },
-      backgroundColor: Colors.transparent, // Make the background transparent
+      backgroundColor: Colors.transparent,
       shape: const CircleBorder(),
-      elevation: 10, // Optional: Add shadow for a lifted effect
+      elevation: 10,
       child: const Icon(
         Icons.add,
-        size: 40, // Increase the size of the icon
+        size: 40,
       ),
     ),
   );

@@ -16,7 +16,7 @@ class CustomBottomNavBar extends StatelessWidget {
       color: const Color(0xFF262626),
       elevation: 10,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -25,10 +25,10 @@ class CustomBottomNavBar extends StatelessWidget {
             _buildNavItem(Icons.home, "Home", 0),
             _buildNavItem(Icons.child_care, "Kids", 1),
             // Empty space for FloatingActionButton
-            const SizedBox(width: 40), // Gap for FAB
+            const SizedBox(width: 30), // Gap for FAB
             // Right side items
-            _buildNavItem(Icons.list, "Measurement", 3),
-            _buildNavItem(Icons.person, "Profile", 4),
+            _buildNavItem(Icons.person, "Profile", 2),
+            _buildNavItem(Icons.settings, "Settings", 3),
           ],
         ),
       ),
@@ -37,10 +37,14 @@ class CustomBottomNavBar extends StatelessWidget {
 
   // Helper method to build a navigation item
   Widget _buildNavItem(IconData icon, String label, int index) {
-    return GestureDetector(
-      onTap: () {
+    return ElevatedButton(
+      onPressed: () {
         onTap(index);
       },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
