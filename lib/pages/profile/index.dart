@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sishu_sewa/pages/profile/edit_profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -65,52 +66,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildProfileCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF5D5C5D),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            offset: const Offset(0, 4),
-            blurRadius: 10,
-          ),
-        ],
-      ),
-      child: const Row(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(
-                'https://via.placeholder.com/150'), // Replace with actual image
-          ),
-          SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Prabesh Guragain',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'prabeshguragain@gmail.com',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 14,
-                ),
+    return GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => EditProfileScreen(
+              name: "Prabesh Guragain",
+              email: "prabeshguragain@gmail.com",
+              dob: DateTime(1998, 10, 1),
+              gender: "Male",
+              phone: "9841234567",
+              imgUrl: "https://randomuser.me/api/portraits/men/1.jpg",
+            ),
+          ));
+        },
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: const Color(0xFF5D5C5D),
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                offset: const Offset(0, 4),
+                blurRadius: 10,
               ),
             ],
           ),
-          Spacer(),
-          Icon(Icons.edit, color: Colors.white),
-        ],
-      ),
-    );
+          child: const Row(
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(
+                    'https://via.placeholder.com/150'), // Replace with actual image
+              ),
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Prabesh Guragain',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'prabeshguragain@gmail.com',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Icon(Icons.edit, color: Colors.white),
+            ],
+          ),
+        ));
   }
 
   Widget _buildOptionsSection() {
