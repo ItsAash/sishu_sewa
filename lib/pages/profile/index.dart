@@ -10,6 +10,13 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   // Settings state
   bool isNotificationEnabled = false;
+  late String selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedLanguage = "English";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +78,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      child: Row(
+      child: const Row(
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 30,
             backgroundImage: NetworkImage(
                 'https://via.placeholder.com/150'), // Replace with actual image
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
@@ -99,8 +106,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ],
           ),
-          const Spacer(),
-          const Icon(Icons.edit, color: Colors.white),
+          Spacer(),
+          Icon(Icons.edit, color: Colors.white),
         ],
       ),
     );
@@ -143,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: 'Language',
           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
           onTap: () {
-            print('Language clicked');
+            _showLanguageSelectionDialog(context);
           },
         ),
         _buildCustomTile(
@@ -151,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: 'Log out',
           trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
           onTap: () {
-            print('Log out clicked');
+            _showLogoutConfirmationDialog(context);
           },
         ),
       ],
@@ -249,5 +256,179 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  void _showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, // Dismiss dialog by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor:
+              Colors.transparent, // Transparent to allow custom styling
+          child: Container(
+            width:
+                MediaQuery.of(context).size.width * 0.9, // 90% of screen width
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF5D5C5D), // Match the dark theme
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Adjust height to content
+              children: [
+                const Text(
+                  'Confirm Logout',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Are you sure you want to log out?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                      },
+                      child: const Text(
+                        'Cancel',
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close the dialog
+                        _performLogout(); // Handle the logout logic
+                      },
+                      child: const Text(
+                        'Log Out',
+                        style: TextStyle(color: Colors.red, fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showLanguageSelectionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true, // Allow dismiss by tapping outside
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.9,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF5D5C5D), // Match the dark theme
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min, // Wrap content
+              children: [
+                const Text(
+                  'Select Language',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                // Language options
+                RadioListTile<String>(
+                  value: 'English',
+                  groupValue: selectedLanguage,
+                  onChanged: (value) {
+                    if (value != null) {
+                      selectedLanguage = value;
+                      Navigator.of(context).pop(); // Close dialog
+                      _applyLanguageChange(selectedLanguage); // Apply changes
+                    }
+                  },
+                  title: const Text(
+                    'English',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  activeColor: Colors.blue,
+                  tileColor: Colors.transparent,
+                ),
+                RadioListTile<String>(
+                  value: 'Spanish',
+                  groupValue: selectedLanguage,
+                  onChanged: (value) {
+                    if (value != null) {
+                      selectedLanguage = value;
+                      Navigator.of(context).pop(); // Close dialog
+                      _applyLanguageChange(selectedLanguage); // Apply changes
+                    }
+                  },
+                  title: const Text(
+                    'Spanish',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  activeColor: Colors.blue,
+                ),
+                RadioListTile<String>(
+                  value: 'Nepali',
+                  groupValue: selectedLanguage,
+                  onChanged: (value) {
+                    if (value != null) {
+                      selectedLanguage = value;
+                      Navigator.of(context).pop(); // Close dialog
+                      _applyLanguageChange(selectedLanguage); // Apply changes
+                    }
+                  },
+                  title: const Text(
+                    'Nepali',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  activeColor: Colors.blue,
+                ),
+                const SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.blue, fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _applyLanguageChange(String language) {
+    // Implement logic to apply the selected language here
+    setState(() {
+      selectedLanguage = language;
+    });
+  }
+
+  void _performLogout() {
+    // Handle your logout logic here, e.g., clearing user data, navigating to login screen
   }
 }

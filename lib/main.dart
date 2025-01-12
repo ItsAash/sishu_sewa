@@ -3,7 +3,7 @@ import 'package:sishu_sewa/components/navbar.dart';
 import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
-import 'package:sishu_sewa/pages/profile_screen.dart';
+import 'package:sishu_sewa/pages/profile/index.dart';
 import 'package:sishu_sewa/pages/setting_screen.dart';
 
 void main() {
