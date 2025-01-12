@@ -27,8 +27,8 @@ class CustomBottomNavBar extends StatelessWidget {
             // Empty space for FloatingActionButton
             const SizedBox(width: 30), // Gap for FAB
             // Right side items
-            _buildNavItem(Icons.person, "Profile", 2),
-            _buildNavItem(Icons.settings, "Settings", 3),
+            _buildNavItem(Icons.settings, "Settings", 2),
+            _buildNavItem(Icons.person, "Profile", 3),
           ],
         ),
       ),

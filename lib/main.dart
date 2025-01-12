@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sishu_sewa/components/navbar.dart';
-import 'package:sishu_sewa/models/measurement.dart';
 import 'package:sishu_sewa/pages/add_child.dart';
 import 'package:sishu_sewa/pages/home.dart';
 import 'package:sishu_sewa/pages/kids.dart';
 import 'package:sishu_sewa/pages/profile_screen.dart';
 import 'package:sishu_sewa/pages/setting_screen.dart';
-import 'package:sishu_sewa/pages/kid_profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,8 +48,8 @@ class _MainState extends State<Main> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const KidsScreen(),
-    const ProfileScreen(),
     const SettingsScreen(),
+    const ProfileScreen(),
   ];
 
   void _onTap(int index) {
